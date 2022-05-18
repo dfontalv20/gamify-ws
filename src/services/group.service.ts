@@ -1,4 +1,6 @@
+import { IGroup } from "../interfaces";
 import { Group } from "../models/group.model";
+import { Student } from "../models/student.model";
 
 export const all = async () => await Group.findAll();
 
@@ -11,3 +13,5 @@ export const update = async (id: number, { description }: IGroup) => {
     if (group) return group.update({ description });
     return false;
 };
+
+export const find = async (id: number) => await Group.findByPk(id, { include: Student })

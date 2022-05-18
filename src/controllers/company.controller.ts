@@ -1,5 +1,6 @@
 import * as companyService from "../services/company.service";
 import { Request, Response } from "express";
+import { ICompany } from "../interfaces";
 
 export const create = async (req: Request, res: Response) => {
 	try {

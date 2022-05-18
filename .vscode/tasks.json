@@ -9,6 +9,17 @@
 			],
 			"group": "build",
 			"label": "tsc: compilación: tsconfig.json"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "tsc --build"
 		}
 	]
 }

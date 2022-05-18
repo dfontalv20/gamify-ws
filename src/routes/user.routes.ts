@@ -1,11 +1,14 @@
 import express from 'express';
-const router = express.Router();
-import * as userController from '../controllers/users.controller';
+import validator from '../middlewares/requests/validateRequest';
+import * as userRules from '../middlewares/requests/users.request';
 import auth from '../middlewares/authBearerJwt';
-import * as userValidator from '../middlewares/validators/users';
+import * as userController from '../controllers/users.controller';
 
-router.post('', auth(), userValidator.addUser, userController.add);
-router.get('', auth(true), userController.all);
-router.delete('', auth(true), userValidator.deleteUser, userController.destroy);
+const userRouter = express.Router();
 
-export default router;
+userRouter.post('', auth(true), validator(userRules.create), userController.add);
+userRouter.put('', auth(true), validator(userRules.create), userController.update);
+userRouter.get('', auth(true), userController.all);
+userRouter.delete('', auth(true), userController.destroy);
+
+export default userRouter;

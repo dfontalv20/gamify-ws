@@ -12,7 +12,8 @@ const sequelize = new Sequelize({
   models: [User, Student, Group, Company],
   sync: {
       force: true
-  }
+  },
+  logging: false
 })
 
 const connect = async() => {
@@ -23,6 +24,7 @@ const connect = async() => {
         console.log('Tables synchronized');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
+        process.exit();
     }
 }
 

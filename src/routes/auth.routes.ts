@@ -1,9 +1,10 @@
 import express from 'express';
-const router = express.Router();
 import auth from '../middlewares/authBearerJwt';
 import * as authController from '../controllers/auth.controller';
 
-router.post('/login', authController.login);
-router.get('/user', auth(), authController.user);
+const authRouter = express.Router();
 
-export default router;
+authRouter.post('/login', authController.login);
+authRouter.get('/user', auth(), authController.user);
+
+export default authRouter;

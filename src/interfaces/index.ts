@@ -1,21 +1,21 @@
-interface IUser {
+export interface IUser {
     name: string
     username: string
     password: string
-    student?: IStudent
+    groupId?: number
 }
 
-interface IGroup {
+export interface IGroup {
     description: string
 }
 
-interface IStudent {
+export interface IStudent {
     ecoins: number
     groupId: number
     companyId: number
 }
 
-interface ICompany {
+export interface ICompany {
     name: string
     photo?: string
     students: number[]
