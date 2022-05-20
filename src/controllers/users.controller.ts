@@ -2,6 +2,13 @@ import * as userService from "../services/user.service";
 import { Request, Response } from "express"
 import { IUser } from "../interfaces";
 
+export const find = async (req: Request, res: Response) => {
+    try {
+        return res.status(200).json(await userService.find(+req.params.id));
+    } catch (error) {
+        return res.status(401);
+    }
+}
 export const all = async (req: Request, res: Response) => {
     try {
         const records = await userService.all();
@@ -41,3 +48,16 @@ export const destroy = async (req: Request, res: Response) => {
         return res.status(400);
     }
 };
+
+export const assignReward = async (req: Request, res: Response) => {
+    try {
+        const studentId = +req.params.studentId;
+        const rewardId = +req.params.rewardId;    
+        if (!studentId || !rewardId) return res.status(400).send();
+        const rewardAssigned = await userService.assignReward(studentId, rewardId);
+        if (rewardAssigned) return res.status(201).send();
+        return res.status(404).send();
+    } catch (error) {
+        return res.status(400)
+    }
+}

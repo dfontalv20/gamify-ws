@@ -29,8 +29,11 @@ connectDatabase();
 
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    console.error(err);
-    return res.status(500).send();
+    try {
+        next();
+    } catch (error) {
+        return res.status(500).send();
+    }
 })
 app.listen(process.env.PORT || 8001, () => {
     console.log('Server Running...');

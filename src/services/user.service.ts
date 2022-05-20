@@ -1,9 +1,27 @@
 import { hash } from 'bcrypt';
 import { IUser } from '../interfaces';
+import { Reward } from '../models/reward.model';
 import { Student } from '../models/student.model';
+import { StudentRewards } from '../models/student_rewards.model';
 import { User } from '../models/user.model';
 
-export const find = async (id: number) => await User.findByPk(id);
+export const find = async (id: number) => await User.findByPk(id,
+    {
+        include: {
+            model: Student,
+            include: [
+                {
+                    model: StudentRewards,
+                    attributes: ['createdAt'],
+                    include: [
+                        {
+                            model: Reward
+                        }
+                    ]
+                }
+            ]
+        }
+    });
 export const all = async () => await User.findAll();
 export const add = async (data: IUser) => {
     const { name, username, password, groupId } = data;
@@ -28,6 +46,19 @@ export const destroy = async (id: number) => {
     if (user) {
         if (user.student) await user.student.destroy();
         await user.destroy();
+        return true;
+    }
+    return false;
+}
+
+export const assignReward = async (studentId: number, rewardId: number) => {
+    const student = (await User.findByPk(studentId))?.student;
+    if (!student) return false;
+    const reward = await Reward.findByPk(rewardId);
+    if (student && reward) {
+        await StudentRewards.create({ studentId: student.id, rewardId: student.id });
+        student.ecoins += reward.ecoins;
+        student.save();
         return true;
     }
     return false;

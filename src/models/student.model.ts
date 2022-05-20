@@ -1,6 +1,7 @@
-import { Table, Column, Model, HasOne, BelongsTo, ForeignKey } from 'sequelize-typescript'
+import { Table, Column, Model, HasOne, BelongsTo, ForeignKey, HasMany, BelongsToMany } from 'sequelize-typescript'
 import { Company } from './company.model'
 import { Group } from './group.model'
+import { StudentRewards as StudentReward } from './student_rewards.model'
 import { User } from './user.model'
 
 @Table({
@@ -15,6 +16,7 @@ export class Student extends Model {
     @HasOne(() => User)
     user: User
 
+    @Column({ allowNull: false })
     @ForeignKey(() => Group)
     groupId: number
 
@@ -26,4 +28,6 @@ export class Student extends Model {
 
     @BelongsTo(() => Company)
     company: Company
+    @HasMany(() => StudentReward)
+    rewards: StudentReward[]
 }

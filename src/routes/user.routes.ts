@@ -9,6 +9,8 @@ const userRouter = express.Router();
 userRouter.post('', auth(true), validator(userRules.create), userController.add);
 userRouter.put('', auth(true), validator(userRules.create), userController.update);
 userRouter.get('', auth(true), userController.all);
+userRouter.get('/:id', auth(true), userController.find);
 userRouter.delete('', auth(true), userController.destroy);
+userRouter.post('/:studentId/assignReward/:rewardId', userController.assignReward);
 
 export default userRouter;

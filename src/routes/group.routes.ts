@@ -8,7 +8,7 @@ const userRouter = express.Router();
 
 userRouter.post('', auth(true), validator(groupRules.create), groupController.add);
 userRouter.get('', auth(true), groupController.all);
-userRouter.get(':id', auth(true), groupController.find);
+userRouter.get('/:id', auth(true), groupController.find);
 userRouter.delete('', auth(true), groupController.destroy);
 
 export default userRouter;

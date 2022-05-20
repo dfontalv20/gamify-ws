@@ -21,3 +21,9 @@ export interface ICompany {
     students: number[]
     groupId: number
 }
+
+export interface IReward {
+    name: string
+    photo?: string
+    ecoins: number
+}
