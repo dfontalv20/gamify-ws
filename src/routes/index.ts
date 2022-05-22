@@ -6,9 +6,9 @@ import rewardRouter from './reward.routes';
 
 const router = Router();
 
-router.use('/api/users', userRoutes);
-router.use('/api/auth', authRoutes);
-router.use('/api/groups', groupRoutes);
-router.use('/api/rewards', rewardRouter)
+router.use('/users', userRoutes);
+router.use('/auth', authRoutes);
+router.use('/groups', groupRoutes);
+router.use('/rewards', rewardRouter)
 
 export default router;
