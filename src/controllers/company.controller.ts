@@ -12,10 +12,22 @@ export const create = async (req: Request, res: Response) => {
 	}
 };
 
+export const find = async (req: Request, res: Response) => {
+	try {
+		const companyId = +req.params.id;
+		if (!companyId) return res.status(400);
+		const company = await companyService.find(companyId);
+		res.status(200).json(company);
+	} catch (error) {
+		res.status(400).send();
+	}
+}
+
 export const destroy = async (req: Request, res: Response) => {
 	try {
-		const companyId = req.params.id;
-		await companyService.destroy(parseInt(companyId));
+		const companyId = +req.params.id;
+		if (!companyId) return res.status(400);
+		await companyService.destroy(companyId);
 		res.status(200).send();
 	} catch (error) {
 		res.status(400).send();
