@@ -66,10 +66,10 @@ export const assignPrize = async (req: Request, res: Response) => {
     try {
         const studentId = +req.params.studentId;
         const prizeId = +req.params.prizeId;
-        if (!studentId || !prizeId) return res.status(400).send();
+        if (!studentId || !prizeId) return res.status(404).send();
         const prizeAssigned = await userService.assignPrize(studentId, prizeId);
         if (prizeAssigned) return res.status(201).json({message: 'Compra realizada'});
-        return res.status(404).send();
+        return res.status(400).json({message: '$ECoins insuficientes'});
     } catch (error) {
         return res.status(400)
     }
