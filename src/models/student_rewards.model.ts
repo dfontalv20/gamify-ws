@@ -1,4 +1,4 @@
-import { Table, Model, ForeignKey, PrimaryKey, Column, Unique, CreatedAt, BelongsTo } from 'sequelize-typescript'
+import { Table, Model, ForeignKey, Column, BelongsTo } from 'sequelize-typescript'
 import { Reward } from './reward.model'
 import { Student } from './student.model'
 
@@ -6,7 +6,7 @@ import { Student } from './student.model'
     createdAt: true,
     updatedAt: false,
 })
-export class StudentRewards extends Model {
+export class StudentReward extends Model {
     @BelongsTo(() => Student)
     student: Student
     @BelongsTo(() => Reward)

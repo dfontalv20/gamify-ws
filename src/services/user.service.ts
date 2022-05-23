@@ -1,21 +1,37 @@
 import { hash } from 'bcrypt';
 import { IUser } from '../interfaces';
+import { Company } from '../models/company.model';
+import { Group } from '../models/group.model';
+import { Prize } from '../models/prize.model';
 import { Reward } from '../models/reward.model';
 import { Student } from '../models/student.model';
-import { StudentRewards } from '../models/student_rewards.model';
+import { StudentPrize } from '../models/student_prizes.model';
+import { StudentReward } from '../models/student_rewards.model';
 import { User } from '../models/user.model';
 
 export const find = async (id: number) => await User.findByPk(id,
     {
         include: {
             model: Student,
+            attributes: ['id', 'ecoins'],
             include: [
+                { model: Group },
+                { model: Company },
                 {
-                    model: StudentRewards,
+                    model: StudentReward,
                     attributes: ['createdAt'],
                     include: [
                         {
                             model: Reward
+                        }
+                    ]
+                },
+                {
+                    model: StudentPrize,
+                    attributes: ['createdAt', 'confirmed'],
+                    include: [
+                        {
+                            model: Prize
                         }
                     ]
                 }
@@ -56,8 +72,22 @@ export const assignReward = async (studentId: number, rewardId: number) => {
     if (!student) return false;
     const reward = await Reward.findByPk(rewardId);
     if (student && reward) {
-        await StudentRewards.create({ studentId: student.id, rewardId: student.id });
+        await StudentReward.create({ studentId: student.id, rewardId: student.id });
         student.ecoins += reward.ecoins;
+        student.save();
+        return true;
+    }
+    return false;
+}
+
+export const assignPrize = async (studentId: number, prizeId: number) => {
+    const student = (await User.findByPk(studentId))?.student;
+    if (!student) return false;
+    const prize = await Prize.findByPk(prizeId);
+    if (student && prize) {
+        if (student.ecoins < prize.ecoins) return false;
+        await StudentPrize.create({ studentId: student.id, prizeId: prize.id });
+        student.ecoins -= prize.ecoins;
         student.save();
         return true;
     }

@@ -1,3 +1,4 @@
+import { ICompany } from "../interfaces";
 import { Company } from "../models/company.model";
 
 export const all = async () => await Company.findAll();

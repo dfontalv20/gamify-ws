@@ -27,3 +27,10 @@ export interface IReward {
     photo?: string
     ecoins: number
 }
+
+export interface IPrize {
+    name: string
+    description?: string
+    photo?: string
+    ecoins: number
+}

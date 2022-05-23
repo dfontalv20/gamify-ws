@@ -12,5 +12,6 @@ userRouter.get('', auth(true), userController.all);
 userRouter.get('/:id', auth(true), userController.find);
 userRouter.delete('', auth(true), userController.destroy);
 userRouter.post('/:studentId/assignReward/:rewardId', userController.assignReward);
+userRouter.post('/:studentId/buyPrize/:prizeId', userController.assignPrize);
 
 export default userRouter;

@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { User } from "../models/user.model";
+import * as userService from "../services/user.service";
 
 
 export const login = async (req: Request, res: Response) => {
@@ -31,7 +32,7 @@ export const user = async (req: Request, res: Response) => {
         if(req.headers.authorization === undefined) return res.status(401);
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken: any = jwt.verify(token, process.env.API_KEY!);
-        const user = await User.findByPk(decodedToken.id);
+        const user = await userService.find(decodedToken.id);
         return res.status(200).json(user);
     } catch (error) {
         return res.status(500).json(error);
