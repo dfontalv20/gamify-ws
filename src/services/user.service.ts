@@ -72,7 +72,7 @@ export const assignReward = async (studentId: number, rewardId: number) => {
     if (!student) return false;
     const reward = await Reward.findByPk(rewardId);
     if (student && reward) {
-        await StudentReward.create({ studentId: student.id, rewardId: student.id });
+        await StudentReward.create({ studentId: student.id, rewardId: reward.id });
         student.ecoins += reward.ecoins;
         student.save();
         return true;

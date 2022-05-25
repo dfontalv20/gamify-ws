@@ -9,6 +9,9 @@ const prizeRouter = express.Router();
 prizeRouter.post('', auth(true), validator(prizeRules.create), prizeController.add);
 prizeRouter.put('', auth(true), validator(prizeRules.create), prizeController.update);
 prizeRouter.get('', auth(), prizeController.all);
+prizeRouter.get('/purchases/unconfirmed', auth(true), prizeController.unconfirmedPurchases);
+prizeRouter.delete('/purchases/:purchaseId', auth(true), prizeController.denyPurchase);
+prizeRouter.patch('/purchases/:purchaseId/confirm', auth(true), prizeController.confirmPurchase);
 prizeRouter.delete('', auth(true), prizeController.destroy);
 
 export default prizeRouter;
